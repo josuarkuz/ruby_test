@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "users/create"
+  get "users/show"
+  get "users/index"
+  get "sessions/create"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -16,6 +20,12 @@ Rails.application.routes.draw do
       resources :products do
         resources :comments, only: %i[index create]
       end
+  
+      resources :users, only: [:create, :index, :show]
+      resources :projects do
+        resources :tasks, only: [:index, :create]
+      end
+      resources :tasks, only: [:show, :update, :destroy]
 
       resources :orders, only: %i[index show create update] do
         resources :order_items, only: %i[create update destroy]
@@ -25,8 +35,12 @@ Rails.application.routes.draw do
           post :cancel
         end
       end
+  
+      
     end
   end
+  
+  post "/graphql", to: "graphql#execute"
 
   mount Admin::Engine, at: "/admin" if defined?(Admin::Engine)
 end

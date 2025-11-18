@@ -62,3 +62,12 @@ gem "oj", "~> 3.16"
 gem "active_model_serializers", "~> 0.10.13"
 
 gem "admin", path: "engines/admin"
+
+gem "graphql"
+gem "graphiql-rails", group: :development
+
+gem "sidekiq"
+
+group :test do
+  gem "minitest" # usually already there
+end

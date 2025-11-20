@@ -2,14 +2,15 @@ module Mutations
   class DeleteTask < BaseMutation
     argument :id, ID, required: true
 
-    type Boolean
+    field :task, Types::TaskType, null: true
+    field :success, Boolean, null: false
 
     def resolve(id:)
-      task = Task.find(id)
+      task = Task.find_by(id: id)
+      return { task: nil, success: false } unless task
+
       task.destroy
-      true
-    rescue ActiveRecord::RecordNotFound
-      false
+      { task: task, success: true }
     end
   end
 end

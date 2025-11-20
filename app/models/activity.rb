@@ -1,5 +1,3 @@
 class Activity < ApplicationRecord
-    belongs_to :record, polymorphic: true
-    
-    validates :action, presence: true
+  belongs_to :actor, class_name: "User", optional: true
 end

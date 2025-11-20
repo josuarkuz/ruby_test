@@ -1,15 +1,16 @@
 module Mutations
   class DeleteProject < BaseMutation
     argument :id, ID, required: true
-
-    type Boolean
+    
+    field :project, Types::ProjectType, null: true
+    field :success, Boolean, null: false
 
     def resolve(id:)
       project = Project.find(id)
+      return { project: nil, success: false } unless task
+
       project.destroy
-      true
-    rescue ActiveRecord::RecordNotFound
-      false
+      { project: project, success: true }
     end
   end
 end

@@ -6,19 +6,21 @@ module Mutations
     argument :status, String, required: false
     argument :assignee_id, ID, required: false
 
-    type Types::TaskType
+    field :task, Types::TaskType, null: false
 
     def resolve(project_id:, title:, description: nil, status: nil, assignee_id: nil)
-      project = Project.find(project_id)
+      project  = Project.find(project_id)
       assignee = User.find_by(id: assignee_id) if assignee_id
 
-      Task.create!(
+      task = Task.create!(
         project:,
         title:,
         description:,
         status: status || "pending",
         assignee:
       )
+
+      { task: task }
     end
   end
 end

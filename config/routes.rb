@@ -16,27 +16,16 @@ Rails.application.routes.draw do
       post "auth/register", to: "auth#register"
       post "auth/login",    to: "auth#login"
       get  "auth/me",       to: "auth#me"
-
-      resources :products do
-        resources :comments, only: %i[index create]
-      end
   
       resources :users, only: [:create, :index, :show]
       resources :projects do
         resources :tasks, only: [:index, :create]
       end
-      resources :tasks, only: [:show, :update, :destroy]
-
-      resources :orders, only: %i[index show create update] do
-        resources :order_items, only: %i[create update destroy]
+      resources :tasks, only: [:show, :update, :destroy] do
         member do
-          post :pay
-          post :fulfill
-          post :cancel
+          patch :change_status
         end
       end
-  
-      
     end
   end
   

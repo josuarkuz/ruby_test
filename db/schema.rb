@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_13_172019) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_18_174328) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -53,6 +53,30 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_13_172019) do
     t.index ["sku"], name: "index_products_on_sku", unique: true
   end
 
+  create_table "projects", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.bigint "assignee_id"
+    t.string "assignee_type"
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.bigint "project_id", null: false
+    t.string "status"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_tasks_on_project_id"
+  end
+
+  create_table "user_sessions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
@@ -65,4 +89,5 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_13_172019) do
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "users"
+  add_foreign_key "tasks", "projects"
 end

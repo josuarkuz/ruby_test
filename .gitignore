@@ -80,3 +80,5 @@
 /coverage
 
 .kamal
+
+/moveToServer.sh

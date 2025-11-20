@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  rubyBackendTest:
+    build: .
+    container_name: be_api
+    ports:
+      - "6691:3000"
+    env_file:
+      - .env

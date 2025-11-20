@@ -3,8 +3,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :update, :destroy]
 
   def index
-    tasks = @project.tasks
-    render json: tasks
+    render json: @project.tasks
   end
 
   def show

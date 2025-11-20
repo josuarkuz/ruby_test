@@ -5,7 +5,7 @@ class Task < ApplicationRecord
   STATUSES = %w[pending in_progress completed].freeze
     
   validates :title, :status, presence: true
-  validates :status, inclusion: { in: STATUSES }
+  validates :status, presence: true, inclusion: { in: STATUSES }
     
   # scopes
   scope :completed, -> { where(status: "completed") }

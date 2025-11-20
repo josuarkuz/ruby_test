@@ -6,8 +6,8 @@ class User < ApplicationRecord
     has_many :orders, dependent: :nullify
     has_many :comments, as: :commentable, dependent: :destroy
 
-    validates :email, presence: true, uniqueness: true
     validates :name, presence: true
+    validates :email, presence: true, uniqueness: true
     validates :password, length: { minimum: 6 }, if: -> { password.present? }
 
     scope :with_orders, -> { includes(:orders) }

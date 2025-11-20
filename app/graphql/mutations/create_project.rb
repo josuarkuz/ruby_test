@@ -3,10 +3,11 @@ module Mutations
     argument :name, String, required: true
     argument :description, String, required: false
 
-    type Types::ProjectType
+    field :project, Types::ProjectType, null: false
 
     def resolve(name:, description: nil)
-      Project.create!(name:, description:)
+      project = Project.create!(name:, description:)
+      { project: project }
     end
   end
 end

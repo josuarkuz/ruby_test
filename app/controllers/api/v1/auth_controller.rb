@@ -4,7 +4,7 @@ module Api
       def register
         user = User.new(user_params)
         if user.save
-          render json: { token: encode_token({ user_id: user.id }) }, status: :created
+          render json: { token: encode_token({ user_id: user.id }), user: UserSerializer.new(user).as_json }, status: :created
         else
           render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
         end
@@ -13,7 +13,7 @@ module Api
       def login
         user = User.find_by(email: params[:email])
         if user&.authenticate(params[:password])
-          render json: { token: encode_token({ user_id: user.id }) }
+          render json: { token: encode_token({ user_id: user.id }), user: UserSerializer.new(user).as_json }
         else
           render json: { error: "Invalid credentials" }, status: :unauthorized
         end
